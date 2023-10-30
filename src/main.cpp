@@ -61,7 +61,6 @@ void obfuscate_and_send_to(char* buffer, int len, int obf, int sock, struct sock
     if (sendto(sock, buffer, len, 0, (struct sockaddr*)&destination, sizeof(destination)) < 0)
     {
         std::cout << "FATAL: failed to send data to remote" << std::endl; 
-        std::cout << "Reason: " << strerror(errno) << std::endl;
         return;
     }
 }
