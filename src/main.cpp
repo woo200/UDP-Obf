@@ -88,7 +88,7 @@ void forward(std::string s_bind_addr, int bind_port, std::string s_remote_addr, 
     }
 
     // create a buffer to store the data
-    char buffer[1024];
+    char buffer[65536];
 
     // create a remote address to send to
     struct sockaddr_in remote_addr;
