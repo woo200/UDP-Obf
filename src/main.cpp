@@ -60,7 +60,8 @@ void obfuscate_and_send_to(char* buffer, int len, int obf, int sock, struct sock
     // send data to remote
     if (sendto(sock, buffer, len, 0, (struct sockaddr*)&destination, sizeof(destination)) < 0)
     {
-        std::cout << "FATAL: failed to send data to remote" << std::endl;
+        std::cout << "FATAL: failed to send data to remote" << std::endl; 
+        std::cout << "Reason: " << strerror(errno) << std::endl;
         return;
     }
 }
@@ -115,7 +116,6 @@ void forward(std::string s_bind_addr, int bind_port, std::string s_remote_addr, 
         // check if sender is remote_addr
         if (sender_addr.sin_addr.s_addr == remote_addr.sin_addr.s_addr && sender_addr.sin_port == remote_addr.sin_port)
         {
-            std::cout << "Received reply from server, I should route the packet to: " << inet_ntoa(last_addr.sin_addr) << ":" << ntohs(last_addr.sin_port) << std::endl;
             obfuscate_and_send_to(buffer, len, obf, sock, last_addr);
             continue;
         } else {
