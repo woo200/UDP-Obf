@@ -65,6 +65,18 @@ void obfuscate_and_send_to(char* buffer, int len, int obf, int sock, struct sock
     }
 }
 
+void handle_sigint(int s)
+{
+    std::cout << "Exiting..." << std::endl;
+
+    // Handle windows cleanup
+    #ifdef _WIN64
+        WSACleanup();
+    #endif
+
+    exit(0);
+}
+
 void forward(std::string s_bind_addr, int bind_port, std::string s_remote_addr, int remote_port, int obf)
 {
     // create a socket and listen on udp
@@ -189,6 +201,15 @@ int main(int argc, char** argv)
         std::cout << "FATAL: remote port must be between 0 and 65535" << std::endl;
         return 1;
     }
+
+    // handle sigint
+    signal(SIGINT, handle_sigint);
+
+    // I dont like windows 
+    #ifdef _WIN64
+        WSADATA wsaData;
+        WSAStartup(MAKEWORD(2, 2), &wsaData);
+    #endif
 
     switch (mode) {
         case CLIENT:
