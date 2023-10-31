@@ -11,6 +11,15 @@ make
 ```
 You can then use the binary created at `./udp_obf`
 
+#### Windows: 
+Note: Requires MinGW or other c++ compiler
+Download the source code
+```
+cd UDP-Obf/
+g++ -o udp_obf src/main.cpp -lws2_32
+```
+(I have not tested the windows code. It may not work at all)
+
 ## Usage
 Run the program from the command line, specifying your mode and network settings:
 `./udp_obf [-csh] [bind_addr] [bind_port] [remote_addr] [remote_port]`
