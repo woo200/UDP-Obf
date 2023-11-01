@@ -18,6 +18,8 @@
     #include <arpa/inet.h>
 #endif
 
+#define DEBUG_TIMESTEP 1 // seconds
+
 enum MODE {CLIENT, SERVER};
 
 void print_usage(const char* name)
@@ -62,14 +64,14 @@ void obfuscate_and_send_to(char* buffer, int len, int obf, int sock, struct sock
     // send data to remote
     if (sendto(sock, buffer, len, 0, (struct sockaddr*)&destination, sizeof(destination)) < 0)
     {
-        std::cout << "Warning: failed to send data to remote" << std::endl; 
+        std::cout << std::endl << "Warning: failed to send data to remote" << std::flush; 
         return;
     }
 }
 
 void handle_sigint(int s)
 {
-    std::cout << "Exiting..." << std::endl;
+    std::cout << std::endl << "Exiting..." << std::endl;
 
     // Handle windows cleanup
     #ifdef _WIN64
@@ -102,7 +104,7 @@ void print_bps(int data_lensum)
         unit = "GiB";
         unit2 = "Gb";
     }
-    std::cout << "DEBUG: " << data_len << " " << unit << "/s" << "[ " << data_len * 8 << " " << unit2 << "/s ]" << std::endl;
+    std::cout << "\33[2K\rDEBUG: " << data_len << " " << unit << "/s" << " [" << data_len * 8 << " " << unit2 << "/s]" << std::flush;
 }
 
 void forward(std::string s_bind_addr, int bind_port, std::string s_remote_addr, int remote_port, int obf, bool debug)
@@ -160,7 +162,7 @@ void forward(std::string s_bind_addr, int bind_port, std::string s_remote_addr, 
         int len = recvfrom(sock, buffer, sizeof(buffer), 0, (struct sockaddr*)&sender_addr, &sender_addr_len);
         if (len < 0)
         {
-            std::cout << "Warning: failed to receive data" << std::endl;
+            std::cout << std::endl << "Warning: failed to receive data" << std::flush;
             return;
         }
         if (debug) {
@@ -169,9 +171,9 @@ void forward(std::string s_bind_addr, int bind_port, std::string s_remote_addr, 
             // check if it has been 5 seconds from start_time
             auto end_time = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
-            if (duration.count() >= 5)
+            if (duration.count() >= DEBUG_TIMESTEP)
             {
-                print_bps(data_lensum / 5);
+                print_bps(data_lensum / DEBUG_TIMESTEP);
                 start_time = std::chrono::high_resolution_clock::now();
                 data_lensum = 0;
             }
