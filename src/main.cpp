@@ -114,7 +114,7 @@ void forward(std::string s_bind_addr, int bind_port, std::string s_remote_addr, 
     while (true)
     {
         struct sockaddr_in sender_addr;
-        socklen_t sender_addr_len = sizeof(sender_addr);
+        int sender_addr_len = sizeof(sender_addr);
 
         // receive data
         int len = recvfrom(sock, buffer, sizeof(buffer), 0, (struct sockaddr*)&sender_addr, &sender_addr_len);
