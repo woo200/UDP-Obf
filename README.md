@@ -22,11 +22,12 @@ g++ -o udp_obf src/main.cpp -lws2_32
 
 ## Usage
 Run the program from the command line, specifying your mode and network settings:
-`./udp_obf [-csh] [bind_addr] [bind_port] [remote_addr] [remote_port]`
+`./udp_obf [-cshd] [bind_addr] [bind_port] [remote_addr] [remote_port]`
 #### Options:
  - `-c` Run as client mode
  - `-s` Run as server mode
  - `-h` Show the help menu
+ - `-d` Show debug info (Includes throughput speed)
 
 #### Server Mode:
  - `bind_addr`: Address to bind to.

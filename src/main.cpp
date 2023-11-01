@@ -22,10 +22,11 @@ enum MODE {CLIENT, SERVER};
 
 void print_usage(const char* name)
 {
-    std::cout << "Usage: " << name << " [-csh] [bind_addr] [bind_port] [remote_addr] [remote_port]" << std::endl;
+    std::cout << "Usage: " << name << " [-cshd] [bind_addr] [bind_port] [remote_addr] [remote_port]" << std::endl;
     std::cout << "  -c: run as client" << std::endl;
     std::cout << "  -s: run as server" << std::endl;
     std::cout << "  -h: print this help" << std::endl;
+    std::cout << "  -d: print debug info" << std::endl;
     std::cout << "Where: Server Mode" << std::endl;
     std::cout << "  bind_addr: address to bind to" << std::endl;
     std::cout << "  bind_port: port to bind to" << std::endl;
