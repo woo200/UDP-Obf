@@ -64,7 +64,7 @@ void obfuscate_and_send_to(char* buffer, int len, int obf, int sock, struct sock
     // send data to remote
     if (sendto(sock, buffer, len, 0, (struct sockaddr*)&destination, sizeof(destination)) < 0)
     {
-        std::cout << std::endl << "Warning: failed to send data to remote" << std::flush; 
+        std::cout << std::endl << "Warning: failed to send data to remote" << std::endl; 
         return;
     }
 }
@@ -162,7 +162,7 @@ void forward(std::string s_bind_addr, int bind_port, std::string s_remote_addr, 
         int len = recvfrom(sock, buffer, sizeof(buffer), 0, (struct sockaddr*)&sender_addr, &sender_addr_len);
         if (len < 0)
         {
-            std::cout << std::endl << "Warning: failed to receive data" << std::flush;
+            std::cout << std::endl << "Warning: failed to receive data" << std::endl;
             return;
         }
         if (debug) {
